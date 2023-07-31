@@ -1,0 +1,98 @@
+画面サイズ：1280x720
+フレームレート：60fps
+操作方法：コントローラー
+　移動：Lスティック
+　攻撃：Aボタン
+ゲームルール
+　敵を全滅させたらゲームクリア
+　敵の攻撃をくらうとゲームオーバー
+必須シーン
+　タイトル
+　ゲームメイン
+　ゲームオーバー
+　ゲームクリア
+　ランキング表示
+　ランキング登録
+必須クラス
+　親
+　　SceneBase
+　　BulletsSpawner
+　　SphereCollider
+　　CharaBase
+　子
+　　GameMainScene
+　　NwaySpawner
+　　Bullet
+　　Enemy
+　　Player
+必須メンバ関数
+　親
+　　SceneBase　純粋仮想関数
+　　　→Update() = 0
+　　　　Draw() = 0 const
+　　BulletsSpawner　弾を発射するベースクラス
+　　　→Shoot()　引数にゲームメインシーンのポインタを受け取るSpawnBulletで弾を生成する
+　　SphereCollider　当たり判定用のクラス
+　　　→CheckCollision()　引数でSphereColliderを受け取るSphereCollider同士の当たり判定を行い当たったかどうかを返す
+　　CharaBase　　　SphereColliderを継承したベースクラス
+　　　→Update()　引数にゲームメインシーンのポインタを受け取る
+　　　　Draw()
+　　　　Hit()　引数でダメージを受け取るダメージを受けたときの処理
+　子
+　　GameMainScene
+　　　→HitCheck()　　弾/プレイヤー/敵の当たり判定のチェックを行う
+　　　　Update() override
+　　　　Draw() override
+　　　　SpawnBullet()　弾の配列に新しくデータを作成する
+　　NwaySpawner
+　　　→Shoot() override
+　　Bullet
+　　　→Update()
+　　　　Draw()
+　　　　GetDamage()
+　　Enemy
+　　　→Update() override
+　　　　Draw() override
+　　　　Hit() override
+　　Player
+　　　→Update() override
+　　　　Draw() override
+　　　　Hit() override
+必須メンバ変数
+　親
+　　SceneBase
+　　　→なし
+　　BulletsSpawner
+　　　→speed(速度)
+　　　　angle(角度)
+　　　　acceleration(速度の変化量)
+　　　　angulVelocity(角度の変化量)
+　　SphereCollider
+　　　→location(中心座標)
+　　　　radius
+　　CharaBase
+　　　→speed
+　　　　image
+　子
+　　GameMainScene
+　　　→player(変数)
+　　　　life(残機)
+　　　　enemy(ポインタ配列)
+　　　　bullets(ポインタ配列)
+　　NwaySpawner
+　　　→numBullets(発射する弾の数)
+　　　　baseAngle(発射する最初の弾の向き)
+　　　　angleDiff(弾同士の角度差)
+　　Bullet
+　　　→damage
+　　　　speed(速度)
+　　　　angle(角度)
+　　　　acceleration(速度の変化量)
+　　　　angulVelocity(角度の変化量)
+　　Enemy
+　　　→hp
+　　　　point(スコアの加算量)
+　　　　weapon(BulletsSpawnerの子クラス)
+　　Player
+　　　→score
+　　　　weapon(BulletsSpawnerポインタ型)
