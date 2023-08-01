@@ -5,7 +5,7 @@ class SphereCollider :
     public ColliderBase
 {
 protected:
-    float radius;
+    float radius;       //半径
 public:
     //コンストラクタ
     SphereCollider(Location location, float radius = 5.f)

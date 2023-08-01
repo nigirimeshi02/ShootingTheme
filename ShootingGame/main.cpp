@@ -1,6 +1,6 @@
 #include"SceneManager/SceneManager.h"
 #include"common.h"
-#include"GameMain.h"
+#include"Scene/GameMain/GameMain.h"
 
 /************************************************
 * プログラムの開始

@@ -21,14 +21,18 @@
   <ItemGroup>
     <ClInclude Include="Collider\ColliderBase.h" />
     <ClInclude Include="common.h" />
-    <ClInclude Include="GameMain.h" />
-    <ClInclude Include="SceneBase.h" />
+    <ClInclude Include="InputControl\Pad\PadInput.h" />
+    <ClInclude Include="InputControl\Key\KeyInput.h" />
+    <ClInclude Include="Scene\GameMain\GameMain.h" />
+    <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="SceneManager\AbstractScene.h" />
     <ClInclude Include="SceneManager\SceneManager.h" />
     <ClInclude Include="Collider\SphereCollider.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="GameMain.cpp" />
+    <ClCompile Include="InputControl\Pad\PadInput.cpp" />
+    <ClCompile Include="InputControl\Key\KeyInput.cpp" />
+    <ClCompile Include="Scene\GameMain\GameMain.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SceneManager\SceneManager.cpp" />
     <ClCompile Include="Collider\SphereCollider.cpp" />

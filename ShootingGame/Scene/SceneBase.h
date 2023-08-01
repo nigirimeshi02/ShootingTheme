@@ -1,5 +1,5 @@
 #pragma once
-#include"SceneManager/SceneManager.h"
+#include"../SceneManager/SceneManager.h"
 
 class SceneBase :
 	public AbstractScene
