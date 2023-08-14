@@ -1,22 +1,39 @@
 #pragma once
-#include"ColliderBase.h"
+#define _USE_MATH_DEFINES
 
-class SphereCollider :
-    public ColliderBase
+#include<math.h>
+
+struct Location
+{
+    float x;
+    float y;
+};
+
+class SphereCollider
 {
 protected:
+    Location location;
     float radius;       //半径
 public:
     //コンストラクタ
-    SphereCollider(Location location, float radius = 5.f)
-    {
-        this->radius = radius;
-    }
+    SphereCollider();
 
-    void Draw()const override;
+    virtual void Draw()const;
 
     //SphereColliderとの当たり判定
-    bool HitSphere(const SphereCollider* sphere_collider)const override;
+    bool CheckCollision(const SphereCollider* sphere_collider)const;
+
+    //中心座標の取得
+    Location GetLocation()const
+    {
+        return location;
+    }
+
+    //中心座標の設定
+    virtual void SetLocation(Location location)
+    {
+        this->location = location;
+    }
 
     //半径の取得
     float GetRadius()const

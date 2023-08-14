@@ -1,6 +1,8 @@
 #include"SceneManager/SceneManager.h"
 #include"common.h"
 #include"Scene/GameMain/GameMain.h"
+#include"InputControl/Key/KeyInput.h"
+#include"InputControl/Pad/PadInput.h"
 
 /************************************************
 * プログラムの開始
@@ -26,9 +28,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	//ゲームループ
 	while ((ProcessMessage() == 0) &&
-		sceenManager->Update() != nullptr)
+		sceenManager->Update() != nullptr &&
+		!(CheckHitKey(KEY_INPUT_ESCAPE)))
 	{
 		ClearDrawScreen();		//画面の初期化
+
+		KeyInput::Update();
+
+		PadInput::Update();
 
 		sceenManager->Draw();
 
