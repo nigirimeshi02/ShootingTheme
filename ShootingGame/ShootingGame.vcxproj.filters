@@ -27,7 +27,7 @@
     <ClInclude Include="Scene\SceneBase.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scene\GameMain\GameMain.h">
+    <ClInclude Include="Scene\GameMain\GameMainScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Collider\SphereCollider.h">
@@ -65,7 +65,7 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scene\GameMain\GameMain.cpp">
+    <ClCompile Include="Scene\GameMain\GameMainScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Collider\SphereCollider.cpp">

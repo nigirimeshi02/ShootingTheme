@@ -28,7 +28,7 @@
     <ClInclude Include="InputControl\Key\KeyInput.h" />
     <ClInclude Include="Character\Player\Player.h" />
     <ClInclude Include="Bullet\Spawner\NwaySpawner.h" />
-    <ClInclude Include="Scene\GameMain\GameMain.h" />
+    <ClInclude Include="Scene\GameMain\GameMainScene.h" />
     <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="SceneManager\AbstractScene.h" />
     <ClInclude Include="SceneManager\SceneManager.h" />
@@ -43,7 +43,7 @@
     <ClCompile Include="InputControl\Key\KeyInput.cpp" />
     <ClCompile Include="Character\Player\Player.cpp" />
     <ClCompile Include="Bullet\Spawner\NwaySpawner.cpp" />
-    <ClCompile Include="Scene\GameMain\GameMain.cpp" />
+    <ClCompile Include="Scene\GameMain\GameMainScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SceneManager\SceneManager.cpp" />
     <ClCompile Include="Collider\SphereCollider.cpp" />

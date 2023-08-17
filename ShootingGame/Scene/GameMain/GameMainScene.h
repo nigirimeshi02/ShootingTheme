@@ -4,7 +4,7 @@
 #include"../../Character/Enemy/Enemy.h"
 #include"../../Bullet/Bullet.h"
 
-class GameMain :
+class GameMainScene :
     public SceneBase
 {
 private:
@@ -12,13 +12,13 @@ private:
 
     Player* player;
     Enemy* enemy;
-    Bullet* bullets[MAX_BULLET];
+    Bullet* bullets[PLAYER_MAX_BULLET + ENEMY_MAX_BULLET ]; /*プレイヤーと敵でわけたほうがいい、もしくは両方の分配列をつくる*/
 public:
     //コンストラクタ
-    GameMain();
+    GameMainScene();
 
     //デストラクタ
-    ~GameMain();
+    ~GameMainScene();
 
     //描画に関すること以外の更新を実装する
     SceneBase* Update()override;

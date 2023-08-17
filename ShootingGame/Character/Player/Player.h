@@ -12,6 +12,7 @@ class Player :
 {
 private:
     int attack_interval;
+    int hit_timer;
     int frame_count;
     int score;
     int life;
@@ -28,7 +29,7 @@ public:
     ~Player();
 
     //描画に関すること以外の更新を実装する
-    void Update()override;
+    void Update(GameMainScene* gamemain_scene)override;
 
     //描画に関することの更新を実装する
     void Draw()const override;

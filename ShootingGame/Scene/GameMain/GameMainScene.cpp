@@ -1,58 +1,62 @@
-#include "GameMain.h"
+#include "GameMainScene.h"
 #include"../../InputControl/Key/KeyInput.h"
 #include"../../InputControl/Pad/PadInput.h"
 
 #define DEBUG
 
-GameMain::GameMain()
+GameMainScene::GameMainScene()
 {
 	player_life = 3;
 
 	player = new Player();
 	enemy = new Enemy();
-	for (int i = 0; i < MAX_BULLET; i++)
-	{
-		bullets[i] = new Bullet();
-	}
+	SpawnBullet();
 }
 
-GameMain::~GameMain()
+GameMainScene::~GameMainScene()
 {
 	delete player;
 	delete enemy;
-	for (int i = 0; i < MAX_BULLET; i++)
+	for (int i = 0; i < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET; i++)
 	{
 		delete bullets[i];
 	}
 }
 
-SceneBase* GameMain::Update()
+SceneBase* GameMainScene::Update()
 {
 	if (player_life > 0)
 	{
-		player->Update();
+		player->Update(this);
 	}
 
 	if (player->GetIsShow())
 	{
-		for (int i = 0; i < 4; i++)
+		for (int i = 0; i < PLAYER_MAX_BULLET; i++)
 		{
 			player->Attack(bullets[i], player, i);
 		}
 	}
+	if (enemy->GetIsShow())
+	{
+		for (int i = 20; i < ENEMY_MAX_BULLET; i++)
+		{
+			enemy->Attack(bullets[i], enemy, i);
+		}
+	}
 
-	for (int i = 0; i < MAX_BULLET; i++)
+	for (int i = 0; i < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET; i++)
 	{
 		bullets[i]->Update();
 	}
 
-	enemy->Update();
+	enemy->Update(this);
 
 	HitCheck();
 	return this;
 }
 
-void GameMain::Draw() const
+void GameMainScene::Draw() const
 {
 #ifdef DEBUG
 	DrawFormatString(0, 20, 0xffffff, "%d %d", KeyInput::GetMouseLocationX(), KeyInput::GetMouseLocationY());
@@ -61,17 +65,14 @@ void GameMain::Draw() const
 #endif // DEBUG
 	if (player_life > 0)
 	{
-		if (player->GetIsShow())
-		{
-			player->Draw();
-		}
+		player->Draw();
 	}
 	else
 	{
 		DrawString(600, 400, "GameOver", 0xffffff, TRUE);
 	}
 	enemy->Draw();
-	for (int i = 0; i < MAX_BULLET; i++)
+	for (int i = 0; i < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET; i++)
 	{
 		if (bullets[i]->GetIsShow())
 		{
@@ -81,7 +82,7 @@ void GameMain::Draw() const
 	}
 }
 
-void GameMain::HitCheck()
+void GameMainScene::HitCheck()
 {
 	//ƒvƒŒƒCƒ„[‚ª“G‚É“–‚½‚Á‚½‚ç
 	if (enemy->GetIsShow())
@@ -96,19 +97,20 @@ void GameMain::HitCheck()
 		}
 	}
 
-	////’e‚ªƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚ç
-	//if (bullet->CheckCollision(player))
-	//{
-	//	player->Respawn();
-	//	if (player->GetIsShow())
-	//	{
-	//		player_life--;
-	//	}
-	//}
-
-	//’e‚ª“G‚É“–‚½‚Á‚½‚ç
+	//’e‚ª“–‚½‚Á‚½‚ç
 	for (Bullet* bullets : bullets)
 	{
+		//’e‚ªƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚ç
+		if (bullets->CheckCollision(player))
+		{
+			player->Respawn();
+			if (player->GetIsShow())
+			{
+				player_life--;
+			}
+		}
+
+		//’e‚ª“G‚É“–‚½‚Á‚½‚ç
 		if (bullets->CheckCollision(enemy))
 		{
 			enemy->Hit(*(bullets->GetDamage()));
@@ -116,7 +118,10 @@ void GameMain::HitCheck()
 	}
 }
 
-void GameMain::SpawnBullet()
+void GameMainScene::SpawnBullet()
 {
-
+	for (int i = 0; i < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET; i++)
+	{
+		bullets[i] = new Bullet();
+	}
 }

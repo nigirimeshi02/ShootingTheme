@@ -18,6 +18,6 @@ void BulletsSpawner::Shoot(Bullet* bullet, CharaBase* character, const int value
 	if (bullet->GetIsShow() == false)
 	{
 		bullet->SetIsShow(true);
-		bullet->SetLocation({ character->GetLocation().x ,character->GetLocation().y });
+		bullet->SetLocation({ character->GetLocation().x + character->GetRadius() ,character->GetLocation().y });
 	}
 }

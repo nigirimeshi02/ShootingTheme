@@ -1,6 +1,6 @@
 #include"SceneManager/SceneManager.h"
 #include"common.h"
-#include"Scene/GameMain/GameMain.h"
+#include"Scene/GameMain/GameMainScene.h"
 #include"InputControl/Key/KeyInput.h"
 #include"InputControl/Pad/PadInput.h"
 
@@ -24,7 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	SetDrawScreen(DX_SCREEN_BACK);		//•`‰ææ‚ğ— ‚É‚·‚é
 
-	SceenManager* sceenManager = new SceenManager(dynamic_cast<AbstractScene*>(new GameMain()));
+	SceenManager* sceenManager = new SceenManager(dynamic_cast<AbstractScene*>(new GameMainScene()));
 
 	//ƒQ[ƒ€ƒ‹[ƒv
 	while ((ProcessMessage() == 0) &&

@@ -1,6 +1,8 @@
 #pragma once
 #include "../Collider/SphereCollider.h"
 
+class GameMainScene;
+
 class CharaBase :
     public SphereCollider
 {
@@ -20,7 +22,7 @@ public:
     ~CharaBase() {};
 
     //描画に関すること以外の更新を実装する
-    virtual void Update() {};
+    virtual void Update(GameMainScene*gamemain_scene) {};
 
     //描画に関することの更新を実装する
     virtual void Draw()const {};

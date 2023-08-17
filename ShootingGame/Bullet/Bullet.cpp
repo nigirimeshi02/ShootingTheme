@@ -11,7 +11,7 @@ Bullet::Bullet()
 	damage = 10;
 	speed = 10;
 	angle = 0;
-	acceleration = 0;
+	acceleration = 1;
 	angleVelocity = 0;
 
 	is_show = false;
@@ -26,7 +26,7 @@ void Bullet::Update()
 {
 	if (is_show)
 	{
-		location.x += speed;
+		location.x += speed * acceleration;
 	}
 	if (location.x < radius || location.x > SCREEN_WIDTH - radius)
 	{

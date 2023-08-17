@@ -3,19 +3,20 @@
 #include"../../InputControl/Key/KeyInput.h"
 #include"../../InputControl/Pad/PadInput.h"
 
-//#define KEYBORD
-#define PAD
+#define KEYBORD
+//#define PAD
 
 Player::Player()
 {
-	location.x = 0;
-	location.y = 0;
+	location.x = RESPAWN_POS_X;
+	location.y = RESPAWN_POS_Y;
 	radius = 10;
 
 	speed = 5;
 	is_show = true;
 
 	attack_interval = 0;
+	hit_timer = 0;
 	frame_count = 0;
 	score = 0;
 	life = 3;
@@ -31,7 +32,7 @@ Player::~Player()
 	delete weapon;
 }
 
-void Player::Update()
+void Player::Update(GameMainScene* gamemain_scene)
 {
 	if (is_show)
 	{
@@ -226,7 +227,10 @@ void Player::Update()
 
 void Player::Draw() const
 {
-	SphereCollider::Draw();
+	if (is_show)
+	{
+		SphereCollider::Draw();
+	}
 }
 
 void Player::Hit(int damage)
@@ -254,7 +258,7 @@ void Player::Attack(Bullet* bullet, CharaBase* character, const int value)
 {
 #ifdef PAD
 
-	if (PadInput::OnPressed(XINPUT_BUTTON_A) && ++attack_interval % 11== 0)
+	if (PadInput::OnPressed(XINPUT_BUTTON_A) && ++attack_interval % 61== 0)
 	{
 		weapon->Shoot(bullet, character, value);
 		attack_interval = 0;
@@ -265,7 +269,7 @@ void Player::Attack(Bullet* bullet, CharaBase* character, const int value)
 
 #ifdef KEYBORD
 
-	if (KeyInput::GetButtonDown(MOUSE_INPUT_LEFT))
+	if (KeyInput::GetButtonDown(MOUSE_INPUT_LEFT) && ++attack_interval % 61 == 0)
 	{
 		weapon->Shoot(bullet, character, value);
 	}
