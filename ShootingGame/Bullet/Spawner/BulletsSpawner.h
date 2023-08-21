@@ -20,6 +20,6 @@ public:
 	//デストラクタ
 	~BulletsSpawner();
 
-	virtual void Shoot(Bullet* bullt, CharaBase* character, const int value);
+	virtual void Shoot(GameMainScene* gamemain_scene, CharaBase* character,  int &value);
 };
 

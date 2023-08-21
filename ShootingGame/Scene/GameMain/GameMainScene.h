@@ -31,5 +31,7 @@ public:
 
     //弾の配列に新しくデータを作成する
     void SpawnBullet();
+
+    Bullet* GetBullet(int &value);
 };
 

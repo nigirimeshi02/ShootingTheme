@@ -17,7 +17,7 @@ GameMainScene::~GameMainScene()
 {
 	delete player;
 	delete enemy;
-	for (int i = 0; i < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET; i++)
+	for (int i = 0; i < (PLAYER_MAX_BULLET + ENEMY_MAX_BULLET); i++)
 	{
 		delete bullets[i];
 	}
@@ -34,14 +34,14 @@ SceneBase* GameMainScene::Update()
 	{
 		for (int i = 0; i < PLAYER_MAX_BULLET; i++)
 		{
-			player->Attack(bullets[i], player, i);
+			player->Attack(this, player, i);
 		}
 	}
 	if (enemy->GetIsShow())
 	{
 		for (int i = 20; i < ENEMY_MAX_BULLET; i++)
 		{
-			enemy->Attack(bullets[i], enemy, i);
+			enemy->Attack(this, enemy, i);
 		}
 	}
 
@@ -53,6 +53,7 @@ SceneBase* GameMainScene::Update()
 	enemy->Update(this);
 
 	HitCheck();
+
 	return this;
 }
 
@@ -100,20 +101,23 @@ void GameMainScene::HitCheck()
 	//’e‚ª“–‚½‚Á‚½‚ç
 	for (Bullet* bullets : bullets)
 	{
-		//’e‚ªƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚ç
-		if (bullets->CheckCollision(player))
+		if (bullets->GetIsShow())
 		{
-			player->Respawn();
-			if (player->GetIsShow())
+			//’e‚ªƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚ç
+			if (bullets->CheckCollision(player))
 			{
-				player_life--;
+				player->Respawn();
+				if (player->GetIsShow())
+				{
+					player_life--;
+				}
 			}
-		}
 
-		//’e‚ª“G‚É“–‚½‚Á‚½‚ç
-		if (bullets->CheckCollision(enemy))
-		{
-			enemy->Hit(*(bullets->GetDamage()));
+			//’e‚ª“G‚É“–‚½‚Á‚½‚ç
+			if (bullets->CheckCollision(enemy))
+			{
+				enemy->Hit(*(bullets->GetDamage()));
+			}
 		}
 	}
 }
@@ -123,5 +127,13 @@ void GameMainScene::SpawnBullet()
 	for (int i = 0; i < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET; i++)
 	{
 		bullets[i] = new Bullet();
+	}
+}
+
+Bullet* GameMainScene::GetBullet(int &value)
+{
+	for (;value < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET; value++)
+	{
+		return bullets[value];
 	}
 }

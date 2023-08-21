@@ -49,10 +49,15 @@ void Enemy::Hit(int damage)
 	hp -= damage;
 }
 
-void Enemy::Attack(Bullet* bullet, CharaBase* character, const int value)
+void Enemy::Attack(GameMainScene* gamemain_scene, CharaBase* character,  int &value)
 {
 	if (++attack_interval % 61 == 0)
 	{
-		wepon->Shoot(bullet, character, value);
+		is_attack = true;
+		wepon->Shoot(gamemain_scene, character, value);
+	}
+	else
+	{
+		is_attack = false;
 	}
 }

@@ -24,7 +24,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 	SetDrawScreen(DX_SCREEN_BACK);		//•`‰ææ‚ğ— ‚É‚·‚é
 
-	SceenManager* sceenManager = new SceenManager(dynamic_cast<AbstractScene*>(new GameMainScene()));
+	SceenManager* sceenManager = new SceenManager(dynamic_cast<SceneBase*>(new GameMainScene()));
 
 	//ƒQ[ƒ€ƒ‹[ƒv
 	while ((ProcessMessage() == 0) &&

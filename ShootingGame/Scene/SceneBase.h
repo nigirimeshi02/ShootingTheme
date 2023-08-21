@@ -1,18 +1,14 @@
 #pragma once
-#include"../SceneManager/SceneManager.h"
+#include"DxLib.h"
 
-class SceneBase :
-	public AbstractScene
+class SceneBase 
 {
 public:
-	//コンストラクタ
-	SceneBase() {};
-
 	//デストラクタ
-	~SceneBase() {};
+	virtual ~SceneBase() {};
 
 	//描画以外の更新を実装する
-	virtual AbstractScene* Update() = 0;
+	virtual SceneBase* Update() = 0;
 
 	//描画に関することを実装する
 	virtual void Draw()const = 0;

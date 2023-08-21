@@ -14,6 +14,7 @@ protected:
     float speed;
 
     bool is_show;
+    bool is_attack;
 public:
     //コンストラクタ
     CharaBase();
@@ -29,14 +30,12 @@ public:
 
     virtual void Hit(int damage) = 0;
 
-    bool GetIsShow()
-    {
-        return is_show;
-    }
+    bool GetIsShow() { return is_show; }
 
-    void SetIsShow(const bool flg)
-    {
-        is_show = flg;
-    }
+    void SetIsShow(const bool flg) { is_show = flg; }
+
+    bool GetIsAttack() { return is_attack; }
+
+    void SetIsAttack(const bool flg) { is_attack = flg; }
 };
 

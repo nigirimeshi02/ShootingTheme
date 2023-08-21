@@ -38,7 +38,7 @@ public:
 
     void Respawn();
     
-    void Attack(Bullet* bullet, CharaBase* character, const int value);
+    void Attack(GameMainScene* gamemain_scene, CharaBase* character, int& value);
 
     int GetLife()
     {

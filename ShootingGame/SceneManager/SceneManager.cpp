@@ -1,8 +1,8 @@
 #include "SceneManager.h"
 
-AbstractScene* SceenManager::Update()
+SceneBase* SceenManager::Update()
 {
-	AbstractScene* next_scene;
+	SceneBase* next_scene;
 	try
 	{
 		next_scene = now_sceen->Update();

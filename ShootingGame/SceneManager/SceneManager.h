@@ -1,21 +1,21 @@
 #pragma once
-#include "AbstractScene.h"
+#include "../Scene/SceneBase.h"
 
 class SceenManager :
-    public AbstractScene
+    public SceneBase
 {
 private:
     //現在のシーン
-    AbstractScene* now_sceen;
+    SceneBase* now_sceen;
 public:
     //コンストラクタ
-    SceenManager(AbstractScene* scene) :now_sceen(scene) {};
+    SceenManager(SceneBase* scene) :now_sceen(scene) {};
 
     //デストラクタ
     ~SceenManager() { delete now_sceen; }
 
     //描画に関すること以外の更新を実装する
-    AbstractScene* Update()override;
+    SceneBase* Update()override;
 
     //描画に関することを
     void Draw()const override;

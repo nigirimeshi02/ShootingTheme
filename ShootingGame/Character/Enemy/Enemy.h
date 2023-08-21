@@ -26,6 +26,6 @@ public:
 
     void Hit(int damage)override;
 
-    void Attack(Bullet* bullet, CharaBase* character, const int value);
+    void Attack(GameMainScene* gamemain_scene, CharaBase* character, int& value);
 };
 

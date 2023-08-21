@@ -15,5 +15,5 @@ public:
     //デストラクタ
     ~NwaySpawner();
 
-    void Shoot(Bullet* bullet, CharaBase* character, const int value)override;
+    void Shoot(GameMainScene* gamemain_scene, CharaBase* character, int& value)override;
 };

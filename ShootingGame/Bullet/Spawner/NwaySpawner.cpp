@@ -1,4 +1,5 @@
 #include "NwaySpawner.h"
+#include"../../Scene/GameMain/GameMainScene.h"
 
 NwaySpawner::NwaySpawner()
 {
@@ -12,14 +13,14 @@ NwaySpawner::~NwaySpawner()
 
 }
 
-void NwaySpawner::Shoot(Bullet* bullet, CharaBase* character, const int value)
+void NwaySpawner::Shoot(GameMainScene* gamemain_scene, CharaBase* character, int &value)
 {
-	if (bullet->GetIsShow() == false)
+	if (gamemain_scene->GetBullet(value)->GetIsShow() == false)
 	{
-		for (int i = 0; i < numBullets; i++)
-		{
-			bullet->SetIsShow(true);
-			bullet->SetLocation({ character->GetLocation().x + character->GetRadius() ,character->GetLocation().y + i * 10 });
-		}
+		//for (int i = 0; i < numBullets; i++)
+		//{
+			gamemain_scene->GetBullet(value)->SetIsShow(true);
+			gamemain_scene->GetBullet(value)->SetLocation({character->GetLocation().x + character->GetRadius() ,character->GetLocation().y + 0 * 10});
+		//}
 	}
 }

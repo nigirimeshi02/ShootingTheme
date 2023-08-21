@@ -1,4 +1,5 @@
 #include "BulletsSpawner.h"
+#include"../../Scene/GameMain/GameMainScene.h"
 
 BulletsSpawner::BulletsSpawner()
 {
@@ -13,11 +14,14 @@ BulletsSpawner::~BulletsSpawner()
 
 }
 
-void BulletsSpawner::Shoot(Bullet* bullet, CharaBase* character, const int value)
+void BulletsSpawner::Shoot(GameMainScene* gamemain_scene, CharaBase* character,  int &value)
 {
-	if (bullet->GetIsShow() == false)
-	{
-		bullet->SetIsShow(true);
-		bullet->SetLocation({ character->GetLocation().x + character->GetRadius() ,character->GetLocation().y });
-	}
+	//for (int i = 0; i < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET; i++);
+	//{
+		if (gamemain_scene->GetBullet(value)->GetIsShow() == false)
+		{
+			gamemain_scene->GetBullet(value)->SetIsShow(true);
+			gamemain_scene->GetBullet(value)->SetLocation({ character->GetLocation().x + character->GetRadius() ,character->GetLocation().y });
+		}
+	//}
 }

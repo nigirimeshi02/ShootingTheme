@@ -7,4 +7,5 @@ CharaBase::CharaBase()
 	speed = 3;
 
 	is_show = false;
+	is_attack = false;
 }
