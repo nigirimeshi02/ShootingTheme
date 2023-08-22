@@ -2,13 +2,13 @@
 #include"../../Bullet/Bullet.h"
 #include"../../Character/CharaBase.h"
 
-#define PLAYER_MAX_BULLET 20
-#define ENEMY_MAX_BULLET 40
+#define PLAYER_MAX_BULLET 30
+#define ENEMY_MAX_BULLET 30
 
 
 class BulletsSpawner
 {
-private:
+protected:
 	float speed;			//速さ
 	float angle;			//角度
 	float acceleration;		//速度の変化量
@@ -20,6 +20,6 @@ public:
 	//デストラクタ
 	~BulletsSpawner();
 
-	virtual void Shoot(GameMainScene* gamemain_scene, CharaBase* character,  int &value);
+	virtual void Shoot(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value);
 };
 

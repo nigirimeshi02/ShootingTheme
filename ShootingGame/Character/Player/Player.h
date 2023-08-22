@@ -38,11 +38,8 @@ public:
 
     void Respawn();
     
-    void Attack(GameMainScene* gamemain_scene, CharaBase* character, int& value);
+    void Attack(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)override;
 
-    int GetLife()
-    {
-        return life;
-    }
+    int GetLife() { return life; }
 };
 

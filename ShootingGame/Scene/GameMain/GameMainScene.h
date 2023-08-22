@@ -4,6 +4,8 @@
 #include"../../Character/Enemy/Enemy.h"
 #include"../../Bullet/Bullet.h"
 
+#define ENEMY 1     //敵の数
+
 class GameMainScene :
     public SceneBase
 {
@@ -11,8 +13,8 @@ private:
     int player_life;
 
     Player* player;
-    Enemy* enemy;
-    Bullet* bullets[PLAYER_MAX_BULLET + ENEMY_MAX_BULLET ]; /*プレイヤーと敵でわけたほうがいい、もしくは両方の分配列をつくる*/
+    Enemy* enemy[ENEMY];
+    Bullet* bullets[PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * ENEMY)]; /*プレイヤーと敵でわけたほうがいい、もしくは両方の分配列をつくる*/
 public:
     //コンストラクタ
     GameMainScene();
@@ -32,6 +34,7 @@ public:
     //弾の配列に新しくデータを作成する
     void SpawnBullet();
 
-    Bullet* GetBullet(int &value);
+    //弾の配列を取得する
+    Bullet* GetBullet(const int& value) { return bullets[value]; }
 };
 

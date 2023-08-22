@@ -2,10 +2,10 @@
 #include"DxLib.h"
 #include"../../Scene/GameMain/GameMainScene.h"
 
-Enemy::Enemy()
+Enemy::Enemy(float x, float y)
 {
-	location.x = 600;
-	location.y = 400;
+	location.x = 600 + x;
+	location.y = 400 + y;
 	radius = 15;
 
 	speed = 3;
@@ -15,12 +15,12 @@ Enemy::Enemy()
 	hp = 50;
 	point = 100;
 
-	wepon = new NwaySpawner();
+	wepon = NwaySpawner();
 }
 
 Enemy::~Enemy()
 {
-	delete wepon;
+
 }
 
 void Enemy::Update(GameMainScene* gamemain_scene)
@@ -49,12 +49,13 @@ void Enemy::Hit(int damage)
 	hp -= damage;
 }
 
-void Enemy::Attack(GameMainScene* gamemain_scene, CharaBase* character,  int &value)
+void Enemy::Attack(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)
 {
-	if (++attack_interval % 61 == 0)
+	if (++attack_interval % 71 == 0)
 	{
 		is_attack = true;
-		wepon->Shoot(gamemain_scene, character, value);
+		wepon.Shoot(gamemain_scene, myself, target, value);
+		attack_interval = 0;
 	}
 	else
 	{

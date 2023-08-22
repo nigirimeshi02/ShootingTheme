@@ -77,9 +77,6 @@
     <ClCompile Include="InputControl\Key\KeyInput.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Character\CharaBase.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Character\Player\Player.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>

@@ -37,7 +37,6 @@
   <ItemGroup>
     <ClCompile Include="Bullet\Spawner\BulletsSpawner.cpp" />
     <ClCompile Include="Bullet\Bullet.cpp" />
-    <ClCompile Include="Character\CharaBase.cpp" />
     <ClCompile Include="Character\Enemy\Enemy.cpp" />
     <ClCompile Include="InputControl\Pad\PadInput.cpp" />
     <ClCompile Include="InputControl\Key\KeyInput.cpp" />

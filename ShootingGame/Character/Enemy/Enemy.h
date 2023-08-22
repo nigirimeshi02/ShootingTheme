@@ -10,10 +10,10 @@ private:
     int attack_interval;
     int hp;
     int point;
-    NwaySpawner* wepon;
+    NwaySpawner wepon;
 public:
     //コンストラクタ
-    Enemy();
+    Enemy(float x, float y);
 
     //デストラクタ
     ~Enemy();
@@ -26,6 +26,6 @@ public:
 
     void Hit(int damage)override;
 
-    void Attack(GameMainScene* gamemain_scene, CharaBase* character, int& value);
+    void Attack(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)override;
 };
 

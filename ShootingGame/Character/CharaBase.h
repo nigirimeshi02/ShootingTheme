@@ -17,18 +17,28 @@ protected:
     bool is_attack;
 public:
     //コンストラクタ
-    CharaBase();
+    CharaBase()
+    {
+        image = NULL;
+
+        speed = 3;
+
+        is_show = false;
+        is_attack = false;
+    }
 
     //デストラクタ
     ~CharaBase() {};
 
     //描画に関すること以外の更新を実装する
-    virtual void Update(GameMainScene*gamemain_scene) {};
+    virtual void Update(GameMainScene* gamemain_scene) = 0;
 
     //描画に関することの更新を実装する
-    virtual void Draw()const {};
+    virtual void Draw()const = 0;
 
     virtual void Hit(int damage) = 0;
+
+    virtual void Attack(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value) = 0;
 
     bool GetIsShow() { return is_show; }
 

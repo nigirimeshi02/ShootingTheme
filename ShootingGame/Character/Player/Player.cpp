@@ -3,8 +3,8 @@
 #include"../../InputControl/Key/KeyInput.h"
 #include"../../InputControl/Pad/PadInput.h"
 
-//#define KEYBORD
-#define PAD
+#define KEYBORD
+//#define PAD
 
 Player::Player()
 {
@@ -254,13 +254,13 @@ void Player::Respawn()
 	}
 }
 
-void Player::Attack(GameMainScene* gamemain_scene, CharaBase* character, int &value)
+void Player::Attack(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)
 {
 #ifdef PAD
 
-	if (PadInput::OnPressed(XINPUT_BUTTON_A) && ++attack_interval % 61== 0)
+	if (PadInput::OnPressed(XINPUT_BUTTON_A) && ++attack_interval % 71== 0)
 	{
-		weapon->Shoot(gamemain_scene, character, value);
+		weapon->Shoot(gamemain_scene, myself, target, value);
 	}
 
 
@@ -270,7 +270,7 @@ void Player::Attack(GameMainScene* gamemain_scene, CharaBase* character, int &va
 
 	if (KeyInput::GetButtonDown(MOUSE_INPUT_LEFT) && ++attack_interval % 61 == 0)
 	{
-		weapon->Shoot(gamemain_scene, character, value);
+		weapon->Shoot(gamemain_scene, myself, target, value);
 	}
 
 #endif // KEYBORD

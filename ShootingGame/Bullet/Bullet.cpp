@@ -9,7 +9,11 @@ Bullet::Bullet()
 	radius = 7;
 
 	damage = 10;
-	speed = 10;
+
+	move_x = 0;
+	move_y = 0;
+
+	speed = 0;
 	angle = 0;
 	acceleration = 1;
 	angleVelocity = 0;
@@ -26,12 +30,24 @@ void Bullet::Update()
 {
 	if (is_show)
 	{
-		location.x += speed * acceleration;
+		if (angle < 0.5f)
+		{
+			location.x += (speed * acceleration) + move_x;
+			location.y -= move_y;
+		}
+		else
+		{
+			location.x -= (speed * acceleration) + move_x;
+			location.y += move_y;
+		}
 	}
+
 	if (location.x < radius || location.x > SCREEN_WIDTH - radius)
 	{
 		is_show = false;
 	}
+
+	ChangeAngle();
 }
 
 void Bullet::Draw() const
@@ -40,4 +56,11 @@ void Bullet::Draw() const
 	{
 		DrawCircleAA(GetLocation().x, GetLocation().y, GetRadius(), 10, 0xffff00, TRUE);
 	}
+}
+
+void Bullet::ChangeAngle()
+{
+	float rad = angle * (float)M_PI * 2;
+	move_x = speed * cosf(rad);
+	move_y = speed * sinf(rad);
 }

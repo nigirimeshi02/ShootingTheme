@@ -6,6 +6,8 @@ class NwaySpawner :
 {
 private:
     int numBullets;     //”­Ë‚·‚é’e‚Ì”
+    int angle_cnt;
+
     float baseAngle;    //”­Ë‚·‚éÅ‰‚Ì’e‚ÌŒü‚«
     float angleDiff;    // ’e“¯m‚ÌŠp“x·
 public:
@@ -15,5 +17,11 @@ public:
     //ƒfƒXƒgƒ‰ƒNƒ^
     ~NwaySpawner();
 
-    void Shoot(GameMainScene* gamemain_scene, CharaBase* character, int& value)override;
+    void Shoot(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)override;
+
+    //”­Ë‚·‚é’e‚Ì”‚ğæ“¾‚·‚é
+    int GetNumBullets() { return numBullets; }
+
+    //”­Ë‚·‚é’e‚Ì”‚ğİ’è‚·‚é
+    void SetNumBullets(const int value) { numBullets = value; }
 };
