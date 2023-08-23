@@ -200,6 +200,7 @@ void Player::Update(GameMainScene* gamemain_scene)
 		location.x += speed * acc_x;
 		location.y += speed * acc_y;
 
+		//xé≤ÇÃà⁄ìÆêßå¿
 		if (location.x < radius || location.x + radius > SCREEN_WIDTH)
 		{
 			if (location.x < radius)
@@ -211,6 +212,8 @@ void Player::Update(GameMainScene* gamemain_scene)
 				location.x = SCREEN_WIDTH - radius;
 			}
 		}
+
+		//yé≤ÇÃà⁄ìÆêßå¿
 		if (location.y < radius || location.y + radius > SCREEN_HEIGHT)
 		{
 			if (location.y < radius)

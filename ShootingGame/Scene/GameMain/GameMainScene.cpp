@@ -7,14 +7,22 @@
 GameMainScene::GameMainScene()
 {
 	life = 3;
+
 	attack_interval = 0;
 	respawn_interval = 0;
+	wait_timer = 180;
+
+	stage_count = 1;
 
 	player = new Player();
+
 	for (int i = 0; i < ENEMY; i++)
 	{
-		enemy[i] = new Enemy((float)i, (float)(i * 150));
+		enemy[i] = new Enemy(0, 0);
 	}
+
+	CreateStage(stage_count);
+
 	SpawnBullet();
 }
 
@@ -59,6 +67,7 @@ SceneBase* GameMainScene::Update()
 		respawn_interval = 0;
 	}
 
+	//クリアフラグをtrueにする
 	is_clear = true;
 
 	for (int i = 0; i < ENEMY; i++)
@@ -82,6 +91,7 @@ SceneBase* GameMainScene::Update()
 			}
 			enemy[i]->Update(this);
 
+			//敵が一人でも生きているならfalseにする
 			is_clear = false;
 		}
 	}
@@ -92,6 +102,20 @@ SceneBase* GameMainScene::Update()
 	}
 
 	HitCheck();
+
+	if (player->GetIsShow())
+	{
+		if (is_clear)
+		{
+			if (--wait_timer < 0)
+			{
+				if (stage_count < MAX_STAGE)
+				{
+					NextStage();
+				}
+			}
+		}
+	}
 
 	return this;
 }
@@ -104,7 +128,7 @@ void GameMainScene::Draw() const
 	DrawString(0, 0, "GameMain", 0xffffff, TRUE);
 #endif // DEBUG
 
-	DrawFormatString(0, 0, 0xffffff, "SCORE:%d", player->GetScore());
+	DrawFormatString(600, 0, 0xffffff, "SCORE:%d", player->GetScore());
 
 	if (life > 0)
 	{
@@ -186,5 +210,94 @@ void GameMainScene::SpawnBullet()
 	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * ENEMY); i++)
 	{
 		bullets[i] = new Bullet();
+	}
+}
+
+void GameMainScene::NextStage()
+{
+	++stage_count;
+	wait_timer = 180;
+	CreateStage(stage_count);
+}
+
+void GameMainScene::CreateStage(const int stage)
+{
+	player->SetLocation({ RESPAWN_POS_X,RESPAWN_POS_Y });
+	switch (stage)
+	{
+	case 1:
+		for (int i = 0; i < ENEMY; i++)
+		{
+			enemy[i]->SetLocation({ 800.f,400.f });
+
+			if (i == 0)
+			{
+				if (enemy[i]->GetIsShow() == false)
+				{
+					enemy[i]->SetIsShow(true);
+				}
+			}
+			else
+			{
+				enemy[i]->SetIsShow(false);
+			}
+		}
+
+		break;
+	case 2:
+		for (int i = 0; i < ENEMY; i++)
+		{
+			enemy[i]->SetLocation({ (float)i + 800.f, (float)(i * 150) + 250.f });
+
+			if (i <= 1)
+			{
+				if (enemy[i]->GetIsShow() == false)
+				{
+					enemy[i]->SetIsShow(true);
+				}
+			}
+			else
+			{
+				enemy[i]->SetIsShow(false);
+			}
+		}
+
+		break;
+	case 3:
+		for (int i = 0; i < ENEMY; i++)
+		{
+			enemy[i]->SetLocation({ (float)i, (float)(i * 150) });
+
+			if (enemy[i]->GetIsShow() == false)
+			{
+				enemy[i]->SetIsShow(true);
+			}
+		}
+
+		break;
+	case 4:
+		for (int i = 0; i < ENEMY; i++)
+		{
+			enemy[i]->SetLocation({ (float)i, (float)(i * 150) });
+
+			if (enemy[i]->GetIsShow() == false)
+			{
+				enemy[i]->SetIsShow(true);
+			}
+		}
+
+		break;
+	case 5:
+		for (int i = 0; i < ENEMY; i++)
+		{
+			enemy[i]->SetLocation({ (float)i, (float)(i * 150) });
+
+			if (enemy[i]->GetIsShow() == false)
+			{
+				enemy[i]->SetIsShow(true);
+			}
+		}
+
+		break;
 	}
 }

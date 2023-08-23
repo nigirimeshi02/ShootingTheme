@@ -5,14 +5,19 @@
 #include"../../Bullet/Bullet.h"
 
 #define ENEMY 3     //敵の数
+#define MAX_STAGE 5
 
 class GameMainScene :
     public SceneBase
 {
 private:
     int life;
+
     int attack_interval;
     int respawn_interval;
+    int wait_timer;
+
+    int stage_count;
 
     bool is_clear;
 
@@ -37,6 +42,10 @@ public:
 
     //弾の配列に新しくデータを作成する
     void SpawnBullet();
+
+    void NextStage();
+
+    void CreateStage(const int stage);
 
     void AddScore(int& score) { player->SetScore(score); }
 

@@ -24,10 +24,13 @@
     <ClInclude Include="Character\CharaBase.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="Character\Enemy\Enemy.h" />
+    <ClInclude Include="Scene\Ranking\InputRankingScene.h" />
+    <ClInclude Include="Scene\End\EndScene.h" />
     <ClInclude Include="InputControl\Pad\PadInput.h" />
     <ClInclude Include="InputControl\Key\KeyInput.h" />
     <ClInclude Include="Character\Player\Player.h" />
     <ClInclude Include="Bullet\Spawner\NwaySpawner.h" />
+    <ClInclude Include="Scene\Ranking\RankingScene.h" />
     <ClInclude Include="Scene\GameMain\GameMainScene.h" />
     <ClInclude Include="Scene\SceneBase.h" />
     <ClInclude Include="SceneManager\AbstractScene.h" />
@@ -39,10 +42,13 @@
     <ClCompile Include="Bullet\Spawner\BulletsSpawner.cpp" />
     <ClCompile Include="Bullet\Bullet.cpp" />
     <ClCompile Include="Character\Enemy\Enemy.cpp" />
+    <ClCompile Include="Scene\Ranking\InputRankingScene.cpp" />
+    <ClCompile Include="Scene\End\EndScene.cpp" />
     <ClCompile Include="InputControl\Pad\PadInput.cpp" />
     <ClCompile Include="InputControl\Key\KeyInput.cpp" />
     <ClCompile Include="Character\Player\Player.cpp" />
     <ClCompile Include="Bullet\Spawner\NwaySpawner.cpp" />
+    <ClCompile Include="Scene\Ranking\RankingScene.cpp" />
     <ClCompile Include="Scene\GameMain\GameMainScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SceneManager\SceneManager.cpp" />

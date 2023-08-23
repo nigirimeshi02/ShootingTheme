@@ -8,8 +8,11 @@ class Enemy :
 {
 private:
     int attack_interval;
+    int move_count;
+
     int hp;
     int point;
+
     NwaySpawner wepon;
 public:
     //コンストラクタ

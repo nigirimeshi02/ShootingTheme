@@ -1,5 +1,6 @@
 #include "Enemy.h"
 #include"DxLib.h"
+#include"../../common.h"
 #include"../../Scene/GameMain/GameMainScene.h"
 
 Enemy::Enemy(float x, float y)
@@ -12,6 +13,8 @@ Enemy::Enemy(float x, float y)
 	is_show = true;
 
 	attack_interval = 0;
+	move_count = 0;
+
 	hp = 50;
 	point = 100;
 
@@ -33,7 +36,49 @@ void Enemy::Update(GameMainScene* gamemain_scene)
 
 	if (is_show)
 	{
+		++move_count;
 
+		if (move_count < 60)
+		{
+			location.y++;
+		}
+		else
+		{
+			if (move_count < 120)
+			{
+				location.y--;
+			}
+			else
+			{
+				move_count = 0;
+			}
+		}
+	}
+
+	//xŽ²‚ÌˆÚ“®§ŒÀ
+	if (location.x < radius || location.x + radius > SCREEN_WIDTH)
+	{
+		if (location.x < radius)
+		{
+			location.x = radius;
+		}
+		else
+		{
+			location.x = SCREEN_WIDTH - radius;
+		}
+	}
+
+	//yŽ²‚ÌˆÚ“®§ŒÀ
+	if (location.y < radius || location.y + radius > SCREEN_HEIGHT)
+	{
+		if (location.y < radius)
+		{
+			location.y = radius;
+		}
+		else
+		{
+			location.y = SCREEN_HEIGHT - radius;
+		}
 	}
 }
 
