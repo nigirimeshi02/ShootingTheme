@@ -4,8 +4,8 @@
 
 Enemy::Enemy(float x, float y)
 {
-	location.x = 600 + x;
-	location.y = 400 + y;
+	location.x = 800 + x;
+	location.y = 250 + y;
 	radius = 15;
 
 	speed = 3;
@@ -28,6 +28,7 @@ void Enemy::Update(GameMainScene* gamemain_scene)
 	if (hp < 0)
 	{
 		is_show = false;
+		gamemain_scene->AddScore(point);
 	}
 
 	if (is_show)

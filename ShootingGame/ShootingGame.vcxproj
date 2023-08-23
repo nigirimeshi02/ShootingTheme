@@ -33,6 +33,7 @@
     <ClInclude Include="SceneManager\AbstractScene.h" />
     <ClInclude Include="SceneManager\SceneManager.h" />
     <ClInclude Include="Collider\SphereCollider.h" />
+    <ClInclude Include="Scene\Title\TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bullet\Spawner\BulletsSpawner.cpp" />
@@ -46,6 +47,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SceneManager\SceneManager.cpp" />
     <ClCompile Include="Collider\SphereCollider.cpp" />
+    <ClCompile Include="Scene\Title\TitleScene.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

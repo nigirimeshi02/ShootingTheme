@@ -40,6 +40,10 @@ public:
     
     void Attack(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)override;
 
+    int GetScore() { return score; }
+
+    void SetScore(int& point) { score += point; }
+
     int GetLife() { return life; }
 };
 

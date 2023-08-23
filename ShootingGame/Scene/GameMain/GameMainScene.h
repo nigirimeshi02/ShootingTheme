@@ -4,13 +4,17 @@
 #include"../../Character/Enemy/Enemy.h"
 #include"../../Bullet/Bullet.h"
 
-#define ENEMY 1     //“G‚Ì”
+#define ENEMY 3     //“G‚Ì”
 
 class GameMainScene :
     public SceneBase
 {
 private:
-    int player_life;
+    int life;
+    int attack_interval;
+    int respawn_interval;
+
+    bool is_clear;
 
     Player* player;
     Enemy* enemy[ENEMY];
@@ -33,6 +37,8 @@ public:
 
     //’e‚Ì”z—ñ‚ÉV‚µ‚­ƒf[ƒ^‚ðì¬‚·‚é
     void SpawnBullet();
+
+    void AddScore(int& score) { player->SetScore(score); }
 
     //’e‚Ì”z—ñ‚ðŽæ“¾‚·‚é
     Bullet* GetBullet(const int& value) { return bullets[value]; }

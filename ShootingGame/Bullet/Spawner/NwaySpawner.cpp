@@ -19,8 +19,19 @@ void NwaySpawner::Shoot(GameMainScene* gamemain_scene, const CharaBase* myself, 
 {
 	if (gamemain_scene->GetBullet(value)->GetIsShow() == false)
 	{
-		//baseAngle = atan2f(target->GetLocation().y, target->GetLocation().x);
 		gamemain_scene->GetBullet(value)->SetIsShow(true);
+
+		if (target->GetLocation().x > myself->GetLocation().x)
+		{
+			baseAngle = 0.f;
+			gamemain_scene->GetBullet(value)->SetLocation({ myself->GetLocation().x + myself->GetRadius() ,myself->GetLocation().y });
+		}
+		else
+		{
+			baseAngle = 1.f;
+			gamemain_scene->GetBullet(value)->SetLocation({ myself->GetLocation().x + (myself->GetRadius() * -baseAngle) ,myself->GetLocation().y });
+		}
+
 		gamemain_scene->GetBullet(value)->SetSpeed(speed);
 		gamemain_scene->GetBullet(value)->SetAcceleration(acceleration);
 		gamemain_scene->GetBullet(value)->SetAngleVelecity(angleVelocity);

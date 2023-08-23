@@ -2,8 +2,8 @@
 #include"../../Bullet/Bullet.h"
 #include"../../Character/CharaBase.h"
 
-#define PLAYER_MAX_BULLET 30
-#define ENEMY_MAX_BULLET 30
+#define PLAYER_MAX_BULLET 20
+#define ENEMY_MAX_BULLET 20
 
 
 class BulletsSpawner

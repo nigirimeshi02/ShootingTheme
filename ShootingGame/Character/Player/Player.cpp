@@ -240,18 +240,12 @@ void Player::Hit(int damage)
 
 void Player::Respawn()
 {
+	SetLocation({ RESPAWN_POS_X,RESPAWN_POS_Y });
 
-	is_show = false;
+	acc_x = 0;
+	acc_y = 0;
 
-	if (++frame_count % 30 == 0)
-	{
-		SetLocation({ RESPAWN_POS_X,RESPAWN_POS_Y });
-
-		acc_x = 0;
-		acc_y = 0;
-
-		is_show = true;
-	}
+	is_show = true;
 }
 
 void Player::Attack(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)

@@ -2,16 +2,18 @@
 #include"../../InputControl/Key/KeyInput.h"
 #include"../../InputControl/Pad/PadInput.h"
 
-#define DEBUG
+//#define DEBUG
 
 GameMainScene::GameMainScene()
 {
-	player_life = 3;
+	life = 3;
+	attack_interval = 0;
+	respawn_interval = 0;
 
 	player = new Player();
 	for (int i = 0; i < ENEMY; i++)
 	{
-		enemy[i] = new Enemy((float)i, (float)(i * 30));
+		enemy[i] = new Enemy((float)i, (float)(i * 150));
 	}
 	SpawnBullet();
 }
@@ -25,7 +27,7 @@ GameMainScene::~GameMainScene()
 		delete enemy[i];
 	}
 
-	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * 3); i++)
+	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * ENEMY); i++)
 	{
 		delete bullets[i];
 	}
@@ -33,11 +35,31 @@ GameMainScene::~GameMainScene()
 
 SceneBase* GameMainScene::Update()
 {
-	if (player_life > 0)
+	++attack_interval;
+
+	if (attack_interval > 90)
 	{
-		player->Update(this);
+		attack_interval = 0;
 	}
 
+	if (life > 0)
+	{
+		player->Update(this);
+
+		if (player->GetIsShow() == false)
+		{
+			++respawn_interval;
+		}
+	}
+
+	if (respawn_interval > 60)
+	{
+		player->Respawn();
+		life--;
+		respawn_interval = 0;
+	}
+
+	is_clear = true;
 
 	for (int i = 0; i < ENEMY; i++)
 	{
@@ -53,9 +75,14 @@ SceneBase* GameMainScene::Update()
 		{
 			for (int j = PLAYER_MAX_BULLET + (PLAYER_MAX_BULLET * i); j < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET + (ENEMY_MAX_BULLET * i); j++)
 			{
-				enemy[i]->Attack(this, enemy[i], player, j);
+				if (attack_interval < 30)
+				{
+					enemy[i]->Attack(this, enemy[i], player, j);
+				}
 			}
 			enemy[i]->Update(this);
+
+			is_clear = false;
 		}
 	}
 
@@ -76,13 +103,21 @@ void GameMainScene::Draw() const
 	DrawFormatString(0, 40, 0xffffff, "%d %d", PadInput::GetLStick().x,PadInput::GetRStick().x);
 	DrawString(0, 0, "GameMain", 0xffffff, TRUE);
 #endif // DEBUG
-	if (player_life > 0)
+
+	DrawFormatString(0, 0, 0xffffff, "SCORE:%d", player->GetScore());
+
+	if (life > 0)
 	{
 		player->Draw();
 	}
 	else
 	{
 		DrawString(600, 400, "GameOver", 0xffffff, TRUE);
+	}
+
+	if (is_clear)
+	{
+		DrawString(600, 400, "GameClear", 0xffffff, TRUE);
 	}
 
 	for (int i = 0; i < ENEMY; i++)
@@ -109,11 +144,7 @@ void GameMainScene::HitCheck()
 		{
 			if (player->CheckCollision(enemy[i]))
 			{
-				player->Respawn();
-				if (player->GetIsShow())
-				{
-					player_life--;
-				}
+				player->SetIsShow(false);
 			}
 		}
 	}
@@ -129,11 +160,8 @@ void GameMainScene::HitCheck()
 				//’e‚ªƒvƒŒƒCƒ„[‚É“–‚½‚Á‚½‚ç
 				if (bullets[i]->CheckCollision(player))
 				{
-					player->Respawn();
-					if (player->GetIsShow())
-					{
-						player_life--;
-					}
+					player->SetIsShow(false);
+
 				}
 			}
 
