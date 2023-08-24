@@ -29,7 +29,7 @@ SceneBase* TitleScene::Update()
 	}
 
 	//ã
-	if ((PadInput::GetLStick().y > QUARTER && PadInput::GetLStick().y <= QUARTER * 4 || KeyInput::GetKey(KEY_INPUT_W)) && interval >= 15)
+	if ((PadInput::GetLStick().y > QUARTER && PadInput::GetLStick().y <= QUARTER * 4 || KeyInput::GetKeyDown(KEY_INPUT_W)) && interval >= 15)
 	{
 		cursor_num--;
 		interval = 0;
@@ -40,7 +40,7 @@ SceneBase* TitleScene::Update()
 	}
 
 	//‰º
-	if ((PadInput::GetLStick().y < -QUARTER && PadInput::GetLStick().y >= -QUARTER * 4 - 1 || KeyInput::GetKey(KEY_INPUT_S)) && interval >= 15)
+	if ((PadInput::GetLStick().y < -QUARTER && PadInput::GetLStick().y >= -QUARTER * 4 - 1 || KeyInput::GetKeyDown(KEY_INPUT_S)) && interval >= 15)
 	{
 		cursor_num++;
 		interval = 0;

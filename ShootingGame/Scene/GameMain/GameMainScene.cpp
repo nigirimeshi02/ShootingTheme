@@ -82,13 +82,13 @@ SceneBase* GameMainScene::Update()
 
 		if (enemy[i]->GetIsShow())
 		{
-			for (int j = PLAYER_MAX_BULLET + (PLAYER_MAX_BULLET * i); j < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET + (ENEMY_MAX_BULLET * i); j++)
-			{
-				if (attack_interval < 30)
-				{
-					enemy[i]->Attack(this, enemy[i], player, j);
-				}
-			}
+			//for (int j = PLAYER_MAX_BULLET + (PLAYER_MAX_BULLET * i); j < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET + (ENEMY_MAX_BULLET * i); j++)
+			//{
+			//	if (attack_interval < 30)
+			//	{
+			//		enemy[i]->Attack(this, enemy[i], player, j);
+			//	}
+			//}
 			enemy[i]->Update(this);
 
 			//“G‚ªˆêl‚Å‚à¶‚«‚Ä‚¢‚é‚È‚çfalse‚É‚·‚é
