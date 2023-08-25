@@ -8,7 +8,9 @@ Bullet::Bullet()
 	location.y = 0;
 	radius = 7;
 
-	damage = 10;
+	damage = 1;
+
+	show_time = 0;
 
 	move_x = 0;
 	move_y = 0;
@@ -30,6 +32,7 @@ void Bullet::Update()
 {
 	if (is_show)
 	{
+		++show_time;
 		if (angle < 0.5f)
 		{
 			location.x += (speed * acceleration) + move_x;
@@ -42,8 +45,9 @@ void Bullet::Update()
 		}
 	}
 
-	if (location.x < radius || location.x > SCREEN_WIDTH - radius)
+	if (location.x < radius || location.x > SCREEN_WIDTH - radius || show_time > 60)
 	{
+		show_time = 0;
 		is_show = false;
 	}
 

@@ -1,6 +1,7 @@
-#include "GameMainScene.h"
 #include"../../InputControl/Key/KeyInput.h"
 #include"../../InputControl/Pad/PadInput.h"
+#include "GameMainScene.h"
+#include"../Title/TitleScene.h"
 
 //#define DEBUG
 
@@ -14,28 +15,32 @@ GameMainScene::GameMainScene()
 
 	stage_count = 1;
 
+	is_clear = true;
+	game_clear_flg = false;
+	game_over_flg = false;
+
 	player = new Player();
 
-	for (int i = 0; i < ENEMY; i++)
+	for (int i = 0; i < MAX_ENEMY; i++)
 	{
 		enemy[i] = new Enemy(0, 0);
 	}
 
-	CreateStage(stage_count);
-
 	SpawnBullet();
+
+	CreateStage(stage_count);
 }
 
 GameMainScene::~GameMainScene()
 {
 	delete player;
 
-	for (int i = 0; i < ENEMY; i++)
+	for (int i = 0; i < MAX_ENEMY; i++)
 	{
 		delete enemy[i];
 	}
 
-	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * ENEMY); i++)
+	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * MAX_ENEMY); i++)
 	{
 		delete bullets[i];
 	}
@@ -53,10 +58,24 @@ SceneBase* GameMainScene::Update()
 	if (life > 0)
 	{
 		player->Update(this);
-
-		if (player->GetIsShow() == false)
+		if (player->GetIsShow())
+		{
+			for (int j = 0; j < PLAYER_MAX_BULLET; j++)
+			{
+				player->Attack(this, player, j);
+			}
+		}
+		else
 		{
 			++respawn_interval;
+		}
+	}
+	else
+	{
+		game_over_flg = true;
+		if (--wait_timer < 0)
+		{
+			return new TitleScene();
 		}
 	}
 
@@ -67,51 +86,50 @@ SceneBase* GameMainScene::Update()
 		respawn_interval = 0;
 	}
 
-	//クリアフラグをtrueにする
+	//クリアフラグをtrueにしておく
 	is_clear = true;
 
-	for (int i = 0; i < ENEMY; i++)
+	for (int i = 0; i < MAX_ENEMY; i++)
 	{
-		if (player->GetIsShow())
-		{
-			for (int j = 0; j < PLAYER_MAX_BULLET; j++)
-			{
-				player->Attack(this, player, enemy[i], j);
-			}
-		}
-
 		if (enemy[i]->GetIsShow())
 		{
-			//for (int j = PLAYER_MAX_BULLET + (PLAYER_MAX_BULLET * i); j < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET + (ENEMY_MAX_BULLET * i); j++)
-			//{
-			//	if (attack_interval < 30)
-			//	{
-			//		enemy[i]->Attack(this, enemy[i], player, j);
-			//	}
-			//}
 			enemy[i]->Update(this);
+
+			for (int j = PLAYER_MAX_BULLET + (PLAYER_MAX_BULLET * i); j < PLAYER_MAX_BULLET + ENEMY_MAX_BULLET + (ENEMY_MAX_BULLET * i); j++)
+			{
+				if (attack_interval < 30)
+				{
+					enemy[i]->Attack(this, enemy[i], j);
+				}
+			}
 
 			//敵が一人でも生きているならfalseにする
 			is_clear = false;
 		}
 	}
 
-	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * ENEMY); i++)
+	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * MAX_ENEMY); i++)
 	{
 		bullets[i]->Update();
 	}
-
-	HitCheck();
 
 	if (player->GetIsShow())
 	{
 		if (is_clear)
 		{
-			if (--wait_timer < 0)
+			if (stage_count < MAX_STAGE)
 			{
-				if (stage_count < MAX_STAGE)
+				if (--wait_timer < 0)
 				{
 					NextStage();
+				}
+			}
+			else
+			{
+				game_clear_flg = true;
+				if (--wait_timer < 0)
+				{
+					return new TitleScene();
 				}
 			}
 		}
@@ -128,6 +146,7 @@ void GameMainScene::Draw() const
 	DrawString(0, 0, "GameMain", 0xffffff, TRUE);
 #endif // DEBUG
 
+	DrawFormatString(400, 0, 0xffffff, "STAGE:%d", stage_count);
 	DrawFormatString(600, 0, 0xffffff, "SCORE:%d", player->GetScore());
 
 	if (life > 0)
@@ -139,17 +158,17 @@ void GameMainScene::Draw() const
 		DrawString(600, 400, "GameOver", 0xffffff, TRUE);
 	}
 
-	if (is_clear)
+	if (game_clear_flg)
 	{
 		DrawString(600, 400, "GameClear", 0xffffff, TRUE);
 	}
 
-	for (int i = 0; i < ENEMY; i++)
+	for (int i = 0; i < MAX_ENEMY; i++)
 	{
 		enemy[i]->Draw();
 	}
 
-	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * ENEMY); i++)
+	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * MAX_ENEMY); i++)
 	{
 		if (bullets[i]->GetIsShow())
 		{
@@ -161,11 +180,11 @@ void GameMainScene::Draw() const
 
 void GameMainScene::HitCheck()
 {
-	for (int i = 0; i < ENEMY; i++)
+	for (int i = 0; i < MAX_ENEMY; i++)
 	{
-		//プレイヤーが敵に当たったら
 		if (enemy[i]->GetIsShow())
 		{
+			//プレイヤーが敵に当たったら
 			if (player->CheckCollision(enemy[i]))
 			{
 				player->SetIsShow(false);
@@ -174,7 +193,7 @@ void GameMainScene::HitCheck()
 	}
 
 	//弾が当たったら
-	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * ENEMY); i++)
+	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * MAX_ENEMY); i++)
 	{
 		if (bullets[i]->GetIsShow())
 		{
@@ -189,7 +208,7 @@ void GameMainScene::HitCheck()
 				}
 			}
 
-			for (int j = 0; j < ENEMY; j++)
+			for (int j = 0; j < MAX_ENEMY; j++)
 			{
 				//敵の弾では敵に当たらないようにする
 				if (i < PLAYER_MAX_BULLET)
@@ -207,7 +226,7 @@ void GameMainScene::HitCheck()
 
 void GameMainScene::SpawnBullet()
 {
-	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * ENEMY); i++)
+	for (int i = 0; i < PLAYER_MAX_BULLET + (ENEMY_MAX_BULLET * MAX_ENEMY); i++)
 	{
 		bullets[i] = new Bullet();
 	}
@@ -226,14 +245,16 @@ void GameMainScene::CreateStage(const int stage)
 	switch (stage)
 	{
 	case 1:
-		for (int i = 0; i < ENEMY; i++)
+		for (int i = 0; i < MAX_ENEMY; i++)
 		{
 			enemy[i]->SetLocation({ 800.f,400.f });
+			enemy[i]->Init(50);
 
 			if (i == 0)
 			{
 				if (enemy[i]->GetIsShow() == false)
 				{
+					enemy[i]->GetWeapon()->SetNumBullets(1);
 					enemy[i]->SetIsShow(true);
 				}
 			}
@@ -245,14 +266,16 @@ void GameMainScene::CreateStage(const int stage)
 
 		break;
 	case 2:
-		for (int i = 0; i < ENEMY; i++)
+		for (int i = 0; i < MAX_ENEMY; i++)
 		{
 			enemy[i]->SetLocation({ (float)i + 800.f, (float)(i * 150) + 250.f });
+			enemy[i]->Init(50);
 
 			if (i <= 1)
 			{
 				if (enemy[i]->GetIsShow() == false)
 				{
+					enemy[i]->GetWeapon()->SetNumBullets(2);
 					enemy[i]->SetIsShow(true);
 				}
 			}
@@ -264,37 +287,56 @@ void GameMainScene::CreateStage(const int stage)
 
 		break;
 	case 3:
-		for (int i = 0; i < ENEMY; i++)
+		for (int i = 0; i < MAX_ENEMY; i++)
 		{
-			enemy[i]->SetLocation({ (float)i, (float)(i * 150) });
+			enemy[i]->SetLocation({ (float)i + 800.f, (float)(i * 150) + 250.f });
+			enemy[i]->Init(50);
 
 			if (enemy[i]->GetIsShow() == false)
 			{
 				enemy[i]->SetIsShow(true);
+				if (i == 1)
+				{
+					enemy[i]->GetWeapon()->SetNumBullets(3);
+				}
 			}
 		}
 
 		break;
 	case 4:
-		for (int i = 0; i < ENEMY; i++)
+		for (int i = 0; i < MAX_ENEMY; i++)
 		{
-			enemy[i]->SetLocation({ (float)i, (float)(i * 150) });
+			enemy[i]->SetLocation({ (float)i + 800.f, (float)(i * 150) + 250.f });
+			enemy[i]->Init(50);
 
 			if (enemy[i]->GetIsShow() == false)
 			{
 				enemy[i]->SetIsShow(true);
+				enemy[i]->GetWeapon()->SetNumBullets(3);
 			}
 		}
 
 		break;
 	case 5:
-		for (int i = 0; i < ENEMY; i++)
+		for (int i = 0; i < MAX_ENEMY; i++)
 		{
-			enemy[i]->SetLocation({ (float)i, (float)(i * 150) });
+			enemy[i]->SetLocation({ 800.f,400.f });
+			enemy[i]->Init(300);
 
 			if (enemy[i]->GetIsShow() == false)
 			{
-				enemy[i]->SetIsShow(true);
+				if (i == 0)
+				{
+					if (enemy[i]->GetIsShow() == false)
+					{
+						enemy[i]->GetWeapon()->SetNumBullets(1);
+						enemy[i]->SetIsShow(true);
+					}
+				}
+				else
+				{
+					enemy[i]->SetIsShow(false);
+				}
 			}
 		}
 

@@ -6,6 +6,8 @@ class Bullet :public SphereCollider
 private:
 	int damage;
 
+	int show_time;
+
 	float move_x;
 	float move_y;
 
@@ -36,7 +38,7 @@ public:
 	
 	//‘¬‚³‚ðÝ’è‚·‚é
 	void SetSpeed(float &speed) { this->speed = speed; }
-	
+
 	//Šp“x‚ðÝ’è‚·‚é
 	void SetAngle(const float angle) { this->angle = angle; }
 

@@ -1,10 +1,11 @@
-#include "Player.h"
-#include"../../common.h"
 #include"../../InputControl/Key/KeyInput.h"
 #include"../../InputControl/Pad/PadInput.h"
+#include "Player.h"
+#include"../../common.h"
+#include"../../Scene/GameMain/GameMainScene.h"
 
-#define KEYBORD
-//#define PAD
+//#define KEYBORD
+#define PAD
 
 Player::Player()
 {
@@ -14,6 +15,7 @@ Player::Player()
 
 	speed = 3;
 	is_show = true;
+	character_state = PLAYER;
 
 	attack_interval = 0;
 	hit_timer = 0;
@@ -24,7 +26,7 @@ Player::Player()
 	acc_x = 0;
 	acc_y = 0;
 
-	weapon = new BulletsSpawner();
+	weapon = new NwaySpawner();
 }
 
 Player::~Player()
@@ -225,6 +227,8 @@ void Player::Update(GameMainScene* gamemain_scene)
 				location.y = SCREEN_HEIGHT - radius;
 			}
 		}
+
+		gamemain_scene->HitCheck();
 	}
 }
 
@@ -251,13 +255,13 @@ void Player::Respawn()
 	is_show = true;
 }
 
-void Player::Attack(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)
+void Player::Attack(GameMainScene* gamemain_scene, CharaBase* myself, const int& value)
 {
 #ifdef PAD
 
-	if (PadInput::OnPressed(XINPUT_BUTTON_A) && ++attack_interval % 71== 0)
+	if (PadInput::OnPressed(XINPUT_BUTTON_A) && ++attack_interval % 61== 0)
 	{
-		weapon->Shoot(gamemain_scene, myself, target, value);
+		weapon->Shoot(gamemain_scene, myself, value);
 	}
 
 
@@ -265,9 +269,10 @@ void Player::Attack(GameMainScene* gamemain_scene, const CharaBase* myself, cons
 
 #ifdef KEYBORD
 
-	if (KeyInput::GetButtonDown(MOUSE_INPUT_LEFT) && ++attack_interval % 61 == 0)
+	if (KeyInput::GetButtonDown(MOUSE_INPUT_LEFT) && ++attack_interval % 71 == 0)
 	{
 		weapon->Shoot(gamemain_scene, myself, target, value);
+		attack_interval = 0;
 	}
 
 #endif // KEYBORD

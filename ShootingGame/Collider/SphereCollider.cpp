@@ -21,7 +21,7 @@ bool SphereCollider::CheckCollision(const SphereCollider* sphere_collider) const
 	float distance = (sphere_collider->GetLocation().x - GetLocation().x) * (sphere_collider->GetLocation().x - GetLocation().x) +
 					(sphere_collider->GetLocation().y - GetLocation().y) * (sphere_collider->GetLocation().y - GetLocation().y);
 
-	if (distance <= (radius + sphere_collider->GetRadius()) * (radius + sphere_collider->GetRadius()))
+	if (distance <= (GetRadius() + sphere_collider->GetRadius()) * (GetRadius() + sphere_collider->GetRadius()))
 	{
 		ret = true;
 	}

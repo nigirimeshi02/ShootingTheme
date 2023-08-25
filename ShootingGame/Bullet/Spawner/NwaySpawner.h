@@ -17,7 +17,7 @@ public:
     //デストラクタ
     ~NwaySpawner();
 
-    void Shoot(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)override;
+    void Shoot(GameMainScene* gamemain_scene, CharaBase* myself, const int& value)override;
 
     //発射する弾の数を取得する
     int GetNumBullets() { return numBullets; }

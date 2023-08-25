@@ -3,6 +3,13 @@
 
 class GameMainScene;
 
+enum Character
+{
+    EMPTY = 0,
+    PLAYER,
+    ENEMY
+};
+
 class CharaBase :
     public SphereCollider
 {
@@ -14,7 +21,8 @@ protected:
     float speed;
 
     bool is_show;
-    bool is_attack;
+
+    Character character_state;
 public:
     //コンストラクタ
     CharaBase()
@@ -24,7 +32,8 @@ public:
         speed = 3;
 
         is_show = false;
-        is_attack = false;
+
+        character_state = EMPTY;
     }
 
     //デストラクタ
@@ -38,14 +47,11 @@ public:
 
     virtual void Hit(int damage) = 0;
 
-    virtual void Attack(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value) = 0;
+    virtual void Attack(GameMainScene* gamemain_scene, CharaBase* myself, const int& value) = 0;
 
     bool GetIsShow() { return is_show; }
 
     void SetIsShow(const bool flg) { is_show = flg; }
 
-    bool GetIsAttack() { return is_attack; }
-
-    void SetIsAttack(const bool flg) { is_attack = flg; }
+    Character GetCharacterState() { return character_state; }
 };
-

@@ -13,7 +13,7 @@ private:
     int hp;
     int point;
 
-    NwaySpawner wepon;
+    NwaySpawner weapon;
 public:
     //コンストラクタ
     Enemy(float x, float y);
@@ -29,6 +29,10 @@ public:
 
     void Hit(int damage)override;
 
-    void Attack(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)override;
+    void Attack(GameMainScene* gamemain_scene, CharaBase* myself, const int& value)override;
+
+    void Init(const int& hp);
+
+    NwaySpawner* GetWeapon() { return &weapon; }
 };
 

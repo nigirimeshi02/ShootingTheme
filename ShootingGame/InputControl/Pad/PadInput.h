@@ -59,7 +59,7 @@ public:
 	//ƒ{ƒ^ƒ“‚ð—£‚µ‚½‚Æ‚«
 	static bool OnRelease(int button)
 	{
-		bool ret = (now_key[button] == TRUE && old_key[button] == FALSE);
+		bool ret = (now_key[button] == FALSE && old_key[button] == TRUE);
 		return ret;
 	}
 

@@ -38,12 +38,14 @@ public:
 
     void Respawn();
     
-    void Attack(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)override;
+    void Attack(GameMainScene* gamemain_scene, CharaBase* myself, const int& value)override;
 
     int GetScore() { return score; }
 
     void SetScore(int& point) { score += point; }
 
     int GetLife() { return life; }
+
+    BulletsSpawner* GetWeapon() { return dynamic_cast<NwaySpawner*>(weapon); }
 };
 

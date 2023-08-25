@@ -2,8 +2,8 @@
 #include"../../Bullet/Bullet.h"
 #include"../../Character/CharaBase.h"
 
-#define PLAYER_MAX_BULLET 20
-#define ENEMY_MAX_BULLET 20
+#define PLAYER_MAX_BULLET 30
+#define ENEMY_MAX_BULLET 30
 
 
 class BulletsSpawner
@@ -20,6 +20,6 @@ public:
 	//デストラクタ
 	~BulletsSpawner();
 
-	virtual void Shoot(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value);
+	virtual void Shoot(GameMainScene* gamemain_scene, CharaBase* myself, const int& value);
 };
 

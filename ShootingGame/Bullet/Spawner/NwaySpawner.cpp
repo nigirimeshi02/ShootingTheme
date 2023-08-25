@@ -15,21 +15,40 @@ NwaySpawner::~NwaySpawner()
 
 }
 
-void NwaySpawner::Shoot(GameMainScene* gamemain_scene, const CharaBase* myself, const CharaBase* target, const int& value)
+void NwaySpawner::Shoot(GameMainScene* gamemain_scene, CharaBase* myself, const int& value)
 {
 	if (gamemain_scene->GetBullet(value)->GetIsShow() == false)
 	{
 		gamemain_scene->GetBullet(value)->SetIsShow(true);
-
-		if (target->GetLocation().x > myself->GetLocation().x)
+		if (myself->GetCharacterState() == PLAYER)
 		{
-			baseAngle = 0.f;
-			gamemain_scene->GetBullet(value)->SetLocation({ myself->GetLocation().x + myself->GetRadius() ,myself->GetLocation().y });
+			for (int i = 0; i < 3; i++)
+			{
+				if (gamemain_scene->GetEnemy(i)->GetLocation().x > myself->GetLocation().x)
+				{
+					baseAngle = 0.f;
+					gamemain_scene->GetBullet(value)->SetLocation({ myself->GetLocation().x + myself->GetRadius() ,myself->GetLocation().y });
+				}
+				else
+				{
+					baseAngle = 1.f;
+					gamemain_scene->GetBullet(value)->SetLocation({ myself->GetLocation().x + (myself->GetRadius() * -angle) ,myself->GetLocation().y });
+				}
+			}
 		}
-		else
+
+		if (myself->GetCharacterState() == ENEMY)
 		{
-			baseAngle = 1.f;
-			gamemain_scene->GetBullet(value)->SetLocation({ myself->GetLocation().x + (myself->GetRadius() * -baseAngle) ,myself->GetLocation().y });
+			if (gamemain_scene->GetPlayer()->GetLocation().x > myself->GetLocation().x)
+			{
+				baseAngle = 0.f;
+				gamemain_scene->GetBullet(value)->SetLocation({ myself->GetLocation().x + myself->GetRadius() ,myself->GetLocation().y });
+			}
+			else
+			{
+				baseAngle = 1.f;
+				gamemain_scene->GetBullet(value)->SetLocation({ myself->GetLocation().x + (myself->GetRadius() * -baseAngle) ,myself->GetLocation().y });
+			}
 		}
 
 		gamemain_scene->GetBullet(value)->SetSpeed(speed);

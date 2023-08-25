@@ -53,7 +53,7 @@ SceneBase* TitleScene::Update()
 	if (cursor_num == 0)
 	{
 		//ゲームメインへ
-		if (PadInput::OnPressed(XINPUT_BUTTON_A) || KeyInput::GetKey(KEY_INPUT_SPACE))
+		if (PadInput::OnButton(XINPUT_BUTTON_A) || KeyInput::GetKey(KEY_INPUT_SPACE))
 		{
 			return new GameMainScene();
 		}
@@ -61,7 +61,7 @@ SceneBase* TitleScene::Update()
 	else if (cursor_num == 1)
 	{
 		//ランキングへ
-		if (PadInput::OnPressed(XINPUT_BUTTON_A) || KeyInput::GetKey(KEY_INPUT_SPACE))
+		if (PadInput::OnButton(XINPUT_BUTTON_A) || KeyInput::GetKey(KEY_INPUT_SPACE))
 		{
 			return new RankingScene();
 		}
@@ -69,7 +69,7 @@ SceneBase* TitleScene::Update()
 	else
 	{
 		//エンド画面へ
-		if (PadInput::OnPressed(XINPUT_BUTTON_A) || KeyInput::GetKey(KEY_INPUT_SPACE))
+		if (PadInput::OnButton(XINPUT_BUTTON_A) || KeyInput::GetKey(KEY_INPUT_SPACE))
 		{
 			return new EndScene();
 		}
