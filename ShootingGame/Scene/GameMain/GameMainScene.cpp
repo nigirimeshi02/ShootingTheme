@@ -2,6 +2,7 @@
 #include"../../InputControl/Pad/PadInput.h"
 #include "GameMainScene.h"
 #include"../Title/TitleScene.h"
+#include"../Ranking/RankingScene.h"
 
 //#define DEBUG
 
@@ -75,7 +76,7 @@ SceneBase* GameMainScene::Update()
 		game_over_flg = true;
 		if (--wait_timer < 0)
 		{
-			return new TitleScene();
+			return new RankingScene(player->GetScore());
 		}
 	}
 
@@ -129,7 +130,7 @@ SceneBase* GameMainScene::Update()
 				game_clear_flg = true;
 				if (--wait_timer < 0)
 				{
-					return new TitleScene();
+					return new RankingScene(player->GetScore());
 				}
 			}
 		}
@@ -173,7 +174,7 @@ void GameMainScene::Draw() const
 		if (bullets[i]->GetIsShow())
 		{
 			bullets[i]->Draw();	
-			DrawFormatStringF(bullets[i]->GetLocation().x, bullets[i]->GetLocation().y, 0xff00ff, "%d", i);
+			//DrawFormatStringF(bullets[i]->GetLocation().x, bullets[i]->GetLocation().y, 0xff00ff, "%d", i);
 		}
 	}
 }
@@ -248,7 +249,7 @@ void GameMainScene::CreateStage(const int stage)
 		for (int i = 0; i < MAX_ENEMY; i++)
 		{
 			enemy[i]->SetLocation({ 800.f,400.f });
-			enemy[i]->Init(50);
+			enemy[i]->Init(50, NORMAL_ENEMY_RADIUS);
 
 			if (i == 0)
 			{
@@ -269,7 +270,7 @@ void GameMainScene::CreateStage(const int stage)
 		for (int i = 0; i < MAX_ENEMY; i++)
 		{
 			enemy[i]->SetLocation({ (float)i + 800.f, (float)(i * 150) + 250.f });
-			enemy[i]->Init(50);
+			enemy[i]->Init(50, NORMAL_ENEMY_RADIUS);
 
 			if (i <= 1)
 			{
@@ -290,7 +291,7 @@ void GameMainScene::CreateStage(const int stage)
 		for (int i = 0; i < MAX_ENEMY; i++)
 		{
 			enemy[i]->SetLocation({ (float)i + 800.f, (float)(i * 150) + 250.f });
-			enemy[i]->Init(50);
+			enemy[i]->Init(50, NORMAL_ENEMY_RADIUS);
 
 			if (enemy[i]->GetIsShow() == false)
 			{
@@ -307,7 +308,7 @@ void GameMainScene::CreateStage(const int stage)
 		for (int i = 0; i < MAX_ENEMY; i++)
 		{
 			enemy[i]->SetLocation({ (float)i + 800.f, (float)(i * 150) + 250.f });
-			enemy[i]->Init(50);
+			enemy[i]->Init(50, NORMAL_ENEMY_RADIUS);
 
 			if (enemy[i]->GetIsShow() == false)
 			{
@@ -321,7 +322,7 @@ void GameMainScene::CreateStage(const int stage)
 		for (int i = 0; i < MAX_ENEMY; i++)
 		{
 			enemy[i]->SetLocation({ 800.f,400.f });
-			enemy[i]->Init(300);
+			enemy[i]->Init(300, BOSS_ENEMY_RADIUS);
 
 			if (enemy[i]->GetIsShow() == false)
 			{

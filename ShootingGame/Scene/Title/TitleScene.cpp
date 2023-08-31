@@ -5,7 +5,7 @@
 #include"../Ranking/RankingScene.h"
 #include"../End/EndScene.h"
 
-#define DEBUG
+//#define DEBUG
 
 TitleScene::TitleScene()
 {

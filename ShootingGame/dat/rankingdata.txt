@@ -1,0 +1,5 @@
+ 1  ajkluuluu       1000
+ 2       sjja        200
+ 3         jb        100
+ 3         sa        100
+ 3          a        100

@@ -26,7 +26,7 @@ Player::Player()
 	acc_x = 0;
 	acc_y = 0;
 
-	weapon = new NwaySpawner();
+	weapon = new BulletsSpawner();
 }
 
 Player::~Player()

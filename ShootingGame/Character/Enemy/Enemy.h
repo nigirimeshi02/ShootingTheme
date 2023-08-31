@@ -3,6 +3,9 @@
 #include"../../Bullet/Spawner/BulletsSpawner.h"
 #include"../../Bullet/Spawner/NwaySpawner.h"
 
+#define NORMAL_ENEMY_RADIUS 15
+#define BOSS_ENEMY_RADIUS (NORMAL_ENEMY_RADIUS * 3)
+
 class Enemy :
     public CharaBase
 {
@@ -11,6 +14,7 @@ private:
     int move_count;
 
     int hp;
+    int max_hp;
     int point;
 
     NwaySpawner weapon;
@@ -31,7 +35,7 @@ public:
 
     void Attack(GameMainScene* gamemain_scene, CharaBase* myself, const int& value)override;
 
-    void Init(const int& hp);
+    void Init(const int& hp, const float radius);
 
     NwaySpawner* GetWeapon() { return &weapon; }
 };

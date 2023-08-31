@@ -3,9 +3,6 @@
 #include"../../common.h"
 #include"../../Scene/GameMain/GameMainScene.h"
 
-#define NORMAL_ENEMY_RADIUS 15
-#define BOSS_ENEMY_RADIUS (NORMAL_ENEMY_RADIUS * 3)
-
 Enemy::Enemy(float x, float y)
 {
 	location.x = 800 + x;
@@ -20,6 +17,7 @@ Enemy::Enemy(float x, float y)
 	move_count = 0;
 
 	hp = 50;
+	max_hp = hp;
 	point = 100;
 
 	weapon = NwaySpawner();
@@ -94,7 +92,7 @@ void Enemy::Draw() const
 	{
 		DrawCircleAA(location.x, location.y, radius, 10, 0xff0000, TRUE);
 		
-		DrawFormatStringF(location.x - (radius + 5), location.y - (radius + 15), 0xffffff, "%d/50", hp);
+		DrawFormatStringF(location.x - (radius + 5), location.y - (radius + 15), 0xffffff, "%d/%d", hp, max_hp);
 	}
 }
 
@@ -116,7 +114,7 @@ void Enemy::Attack(GameMainScene* gamemain_scene, CharaBase* myself, const int& 
 	}
 }
 
-void Enemy::Init(const int& hp)
+void Enemy::Init(const int& hp, const float radius)
 {
 	is_show = false;
 
@@ -124,4 +122,6 @@ void Enemy::Init(const int& hp)
 	move_count = 0;
 
 	this->hp = hp;
+	this->max_hp = this->hp;
+	this->radius = radius;
 }
